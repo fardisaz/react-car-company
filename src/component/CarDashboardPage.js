@@ -1,9 +1,9 @@
 import React from "react";
+import CarList from "./CarList";
 
 const CarDashboardPage = () => (
   <div>
-    <h1>Welcome</h1>
-    <p>This is my dashboard</p>
+    <CarList />
   </div>
 );
 
