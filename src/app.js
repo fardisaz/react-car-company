@@ -15,7 +15,7 @@ store.dispatch(
   addCar({
     brand: "Fiat",
     model: "FIAT 124 SPIDER ABARTH CONVERTIBLE 2018",
-    price: 11110,
+    price: 6000,
     enteredAt: 1200,
   })
 );
@@ -24,16 +24,19 @@ store.dispatch(
   addCar({
     brand: "Fiat",
     model: "FIAT 500 ABARTH HATCHBACK 2017",
-    price: 3340,
+    price: 5000,
     enteredAt: 1100,
   })
 );
 
-store.dispatch(setTextFilter("HATCHBACK"));
-
-setTimeout(() => {
-  store.dispatch(setTextFilter("Fiat"));
-}, 3000);
+store.dispatch(
+  addCar({
+    brand: "KIA",
+    model: "KIA CEED ACCESS WAGON 2014",
+    price: 5500,
+    enteredAt: 1000,
+  })
+);
 
 const state = store.getState();
 const visibleCars = getVisibleCars(state.cars, state.filters);
