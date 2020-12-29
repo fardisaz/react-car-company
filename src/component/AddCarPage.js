@@ -1,10 +1,10 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import CarForm from "./CarForm";
 
 const AddCarPage = () => (
   <div>
-    <h1> Create a Car</h1>
-    <p>This is a create Car page </p>
+    <h1> Add Car</h1>
+    <CarForm />
   </div>
 );
 
