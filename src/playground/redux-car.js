@@ -94,42 +94,67 @@ const filtersReducer = (state = filtersReducerDefaultState, action) => {
   }
 };
 
+// Get visible cars
+const getVisibleCars = (cars, { text, sortBy, startDate, endDate }) => {
+  return cars
+    .filter((car) => {
+      const startDateMatch =
+        typeof startDate !== "number" || car.enteredAt >= startDate;
+      const endDateMatch =
+        typeof endDate !== "number" || car.enteredAt <= endDate;
+      const textMatch = car.brand.toLowerCase().includes(text.toLowerCase());
+
+      return startDateMatch && endDateMatch && textMatch;
+    })
+    .sort((a, b) => {
+      if (sortBy === "date") {
+        return a.enteredAt < b.enteredAt ? 1 : -1;
+      } else if (sortBy === "price") {
+        return a.price < b.price ? 1 : -1;
+      }
+    });
+};
+
 //Store creation
 const store = createStore(
   combineReducers({ cars: carsReducer, filters: filtersReducer })
 );
 store.subscribe(() => {
-  console.log(store.getState());
+  const state = store.getState();
+  const visibleCars = getVisibleCars(state.cars, state.filters);
+  console.log(visibleCars);
 });
 
-// const carOne = store.dispatch(
-//   addCar({
-//     brand: "BMW",
-//     model: "BMW 1-SERIES 118D HATCHBACK 2012",
-//     price: "100000",
-//   })
-// );
-// const carTwo = store.dispatch(
-//   addCar({
-//     brand: "Ferrari",
-//     model: "FERRARI CALIFORNIA CONVERTIBLE 2014",
-//     price: "150000",
-//   })
-// );
+const carOne = store.dispatch(
+  addCar({
+    brand: "BMW",
+    model: "BMW 1-SERIES 118D HATCHBACK 2012",
+    price: "100000",
+    enteredAt: -21000,
+  })
+);
+const carTwo = store.dispatch(
+  addCar({
+    brand: "Ferrari",
+    model: "FERRARI CALIFORNIA CONVERTIBLE 2014",
+    price: "150000",
+    enteredAt: -1000,
+  })
+);
 // store.dispatch(removeCar({ id: carOne.car.id }));
 // store.dispatch(editCar(carTwo.car.id, { price: 145555 }));
 
-// store.dispatch(setTextFilter("Ferrari"));
+//store.dispatch(setTextFilter("Ferrari"));
 // store.dispatch(setTextFilter());
 
-// store.dispatch(sortByPrice());
+store.dispatch(sortByPrice());
 // store.dispatch(sortByDate());
 // console.log(carOne);
 // console.log(carTwo);
 
-store.dispatch(setStartDate(125));
-store.dispatch(setStartDate());
-store.dispatch(setEndDate(1250));
+// store.dispatch(setStartDate(0));
+// //store.dispatch(setStartDate());
+// store.dispatch(setEndDate(999));
 
 const demoState = {
   cars: [
