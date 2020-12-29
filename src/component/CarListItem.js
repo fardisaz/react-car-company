@@ -1,7 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
+import { removeCar } from "../actions/cars";
 
-const CarListItem = ({ brand, price, model, enteredAt }) => (
+const CarListItem = ({ dispatch, id, brand, model, price, enteredAt }) => (
   <div>
     <h3>
       {brand} - {model}
@@ -9,7 +10,14 @@ const CarListItem = ({ brand, price, model, enteredAt }) => (
     <p>
       {price} - {enteredAt}
     </p>
+    <button
+      onClick={() => {
+        dispatch(removeCar({ id }));
+      }}
+    >
+      Remove
+    </button>
   </div>
 );
 
-export default CarListItem;
+export default connect()(CarListItem);
