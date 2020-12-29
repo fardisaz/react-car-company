@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
 import AppRouter from "./routers/AppRouter";
 import configureStore from "./store/configureStore";
 import { addCar } from "./actions/cars";
@@ -28,11 +29,20 @@ store.dispatch(
   })
 );
 
-store.dispatch(setTextFilter("Fiat"));
 store.dispatch(setTextFilter("HATCHBACK"));
+
+setTimeout(() => {
+  store.dispatch(setTextFilter("Fiat"));
+}, 3000);
 
 const state = store.getState();
 const visibleCars = getVisibleCars(state.cars, state.filters);
 console.log(visibleCars);
 
-ReactDOM.render(<AppRouter />, document.getElementById("app"));
+const jsx = (
+  <Provider store={store}>
+    <AppRouter />
+  </Provider>
+);
+
+ReactDOM.render(jsx, document.getElementById("app"));
