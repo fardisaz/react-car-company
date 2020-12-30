@@ -7,14 +7,17 @@ const now = moment();
 console.log(now.format("MMM Do, YYYY"));
 
 export default class CarForm extends React.Component {
-  state = {
-    brand: "",
-    model: "",
-    price: "",
-    enteredAt: moment(),
-    calendarFocused: false,
-    error: "",
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      brand: props.car ? props.car.brand : "",
+      model: props.car ? props.car.model : "",
+      price: props.car ? props.car.price / 100 : "",
+      enteredAt: props.car ? moment(props.car.enteredAt) : moment(),
+      calendarFocused: false,
+      error: "",
+    };
+  }
   onBrandChange = (e) => {
     const brand = e.target.value;
     this.setState(() => ({ brand }));

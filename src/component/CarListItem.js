@@ -1,23 +1,18 @@
 import React from "react";
-import { connect } from "react-redux";
-import { removeCar } from "../actions/cars";
+import { Link } from "react-router-dom";
 
-const CarListItem = ({ dispatch, id, brand, model, price, enteredAt }) => (
+const CarListItem = ({ id, brand, model, price, enteredAt }) => (
   <div>
-    <h3>
-      {brand} - {model}
-    </h3>
+    <Link to={`/edit/${id}`}>
+      <h3>
+        {brand} - {model}
+      </h3>
+    </Link>
+
     <p>
       {price} - {enteredAt}
     </p>
-    <button
-      onClick={() => {
-        dispatch(removeCar({ id }));
-      }}
-    >
-      Remove
-    </button>
   </div>
 );
 
-export default connect()(CarListItem);
+export default CarListItem;
