@@ -1,10 +1,18 @@
 import React from "react";
+import moment from "moment";
+import { SingleDatePicker } from "react-dates";
+import "react-dates/lib/css/_datepicker.css";
+
+const now = moment();
+console.log(now.format("MMM Do, YYYY"));
 
 export default class CarForm extends React.Component {
   state = {
     brand: "",
     model: "",
     price: "",
+    enteredAt: moment(),
+    calendarFocused: false,
   };
   onBrandChange = (e) => {
     const brand = e.target.value;
@@ -21,6 +29,16 @@ export default class CarForm extends React.Component {
     if (price.match(/^\d*(\.\d{0,2})?$/)) {
       this.setState(() => ({ price }));
     }
+  };
+  onDateChange = (enteredAt) => {
+    this.setState(() => ({
+      enteredAt,
+    }));
+  };
+  onFocusChange = ({ focused }) => {
+    this.setState(() => ({
+      calendarFocused: focused,
+    }));
   };
   render() {
     return (
@@ -39,6 +57,14 @@ export default class CarForm extends React.Component {
             onChange={this.onPriceChange}
             placeholder="Price"
           ></input>
+          <SingleDatePicker
+            date={this.state.enteredAt}
+            onDateChange={this.onDateChange}
+            focused={this.state.calendarFocused}
+            onFocusChange={this.onFocusChange}
+            numberOfMonths={1}
+            isOutsideRange={() => false}
+          />
           <textarea
             value={this.state.model}
             onChange={this.onModelChange}
